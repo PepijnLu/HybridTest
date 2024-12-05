@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Move();
-        LookAround();
+        // Move();
+        // LookAround();
     }
 
     void Move()
@@ -37,32 +37,32 @@ public class PlayerController : MonoBehaviour
 
     void LookAround()
     {
-        // // Get mouse input for rotation
-        // float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        // float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-        // // Rotate player horizontally
-        // transform.Rotate(Vector3.up * mouseX);
-
-        // // Rotate camera vertically
-        // xRotation -= mouseY;
-        // xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limit vertical rotation
-        // playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
         // Get mouse input for rotation
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Calculate rotation around the camera
-        Vector3 rotation = new Vector3(-mouseY, mouseX, 0f); // Invert mouseY for intuitive movement
+        // Rotate player horizontally
+        transform.Rotate(Vector3.up * mouseX);
 
-        // Apply rotation to the camera
-        playerCamera.Rotate(rotation);
+        // Rotate camera vertically
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limit vertical rotation
+        playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        // Optional: Clamp the camera's vertical rotation to avoid flipping
-        Vector3 eulerAngles = playerCamera.eulerAngles;
-        eulerAngles.x = Mathf.Clamp(eulerAngles.x > 180f ? eulerAngles.x - 360f : eulerAngles.x, -90f, 90f);
-        playerCamera.eulerAngles = new Vector3(eulerAngles.x, eulerAngles.y, 0f); // Set z to 0 to avoid roll
+        // // Get mouse input for rotation
+        // float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        // float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        // // Calculate rotation around the camera
+        // Vector3 rotation = new Vector3(-mouseY, mouseX, 0f); // Invert mouseY for intuitive movement
+
+        // // Apply rotation to the camera
+        // playerCamera.Rotate(rotation);
+
+        // // Optional: Clamp the camera's vertical rotation to avoid flipping
+        // Vector3 eulerAngles = playerCamera.eulerAngles;
+        // eulerAngles.x = Mathf.Clamp(eulerAngles.x > 180f ? eulerAngles.x - 360f : eulerAngles.x, -90f, 90f);
+        // playerCamera.eulerAngles = new Vector3(eulerAngles.x, eulerAngles.y, 0f); // Set z to 0 to avoid roll
     }
 
     void OnTriggerEnter(Collider collider)

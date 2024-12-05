@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "StanleyParableHallway.sln"
+    "dotnet.defaultSolution": "HybridTest.sln"
 }
