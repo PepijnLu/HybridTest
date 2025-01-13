@@ -3,7 +3,27 @@ guid: 128316973b62e6b4fad48c44d57b1ceb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood.001
+    second: {fileID: 2100000, guid: 7fcf23cf97cf77e4aa18a5e6d32f5c79, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: woodcreator_1_basecolor
+    second: {fileID: 2800000, guid: 6084bee9c62cee9449aa38d1b7b8c2a4, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: woodcreator_1_metallic
+    second: {fileID: 2800000, guid: e964c93b212f5ad4080418f672ad30a2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: woodcreator_1_roughness
+    second: {fileID: 2800000, guid: 93d2722421638004c9f1454c420a6890, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -47,7 +67,7 @@ ModelImporter:
     importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
-    swapUVChannels: 0
+    swapUVChannels: 1
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0

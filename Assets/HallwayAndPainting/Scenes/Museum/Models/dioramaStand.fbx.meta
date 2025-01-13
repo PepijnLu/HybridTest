@@ -3,7 +3,32 @@ guid: ac2d3335e11ab5446b72716757477f63
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black matte metal
+    second: {fileID: 2100000, guid: 0ece760b25448aa4fb2ba65a05563452, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: painted_metal_diffuse
+    second: {fileID: 2800000, guid: 2a1fd14e3419a404ea5773e833f5993a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: painted_metal_metallic
+    second: {fileID: 2800000, guid: 5a732248d4071794c9a7990183dae5d1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: painted_metal_normal_opengl
+    second: {fileID: 2800000, guid: 338a029cf97070d458d6dd219352c15d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: painted_metal_specular
+    second: {fileID: 2800000, guid: eb46068108415aa4ab1ce9d496c9500a, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

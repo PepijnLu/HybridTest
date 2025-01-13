@@ -3,7 +3,52 @@ guid: 29289bfcb73c5644685101bdfea91e63
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Concrete
+    second: {fileID: 2100000, guid: e1c21d5d14652be4e933a36beea61371, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 87748bc84698efc4cba8bcfd4374aaa8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marble floor
+    second: {fileID: 2100000, guid: 1b6a63a210517b3409534d1e286a80b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: 852b5c87836c5404489efeb550e7c7fd, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: concrete_29_color
+    second: {fileID: 2800000, guid: 83b2a3be75658da4a92d46e63f869d95, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: concrete_29_roughness
+    second: {fileID: 2800000, guid: b1ac99a18a5ffd141b96d424a0060ce7, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: marble floor_BaseColor
+    second: {fileID: 2800000, guid: c939e29ec0f61d744aa53120f02c7379, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: marble floor_Normal
+    second: {fileID: 2800000, guid: 28eed8d4abc0e914a8050ff45582ec9b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: marble floor_Roughness
+    second: {fileID: 2800000, guid: 01a56ba6ed72f4f468e553afcfb00f16, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -47,7 +92,7 @@ ModelImporter:
     importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
-    swapUVChannels: 0
+    swapUVChannels: 1
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
