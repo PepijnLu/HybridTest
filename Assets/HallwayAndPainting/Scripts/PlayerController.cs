@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     {
         // Lock the cursor to the center of the screen and hide it
         Cursor.lockState = CursorLockMode.Locked;
-        transform.position = new Vector3(transform.position.x, 1.31f, transform.position.z);
+        //transform.position = new Vector3(transform.position.x, 1.31f, transform.position.z);
     }
 
     void Update()
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         }
 
-        if(SceneManager.GetActiveScene().name == "Painting")
+        if(SceneManager.GetActiveScene().name == "Painting" || SceneManager.GetActiveScene().name == "Museum")
         {
             // Get mouse input for rotation
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;

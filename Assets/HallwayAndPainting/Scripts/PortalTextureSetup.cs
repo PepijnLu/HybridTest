@@ -71,6 +71,16 @@ public class PortalTextureSetup : MonoBehaviour
 			windowCamera.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
 			windowCameraMat.mainTexture = windowCamera.targetTexture;
 		}
+
+		if(SceneManager.GetActiveScene().name == "Museum")
+		{
+			if (windowCamera.targetTexture != null)
+			{
+				windowCamera.targetTexture.Release();
+			}
+			windowCamera.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+			windowCameraMat.mainTexture = windowCamera.targetTexture;
+		}
 	}
 	
 }
