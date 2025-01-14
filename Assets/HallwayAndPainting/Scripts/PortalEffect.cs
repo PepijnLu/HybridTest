@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class PortalEffect : MonoBehaviour
 {
@@ -16,7 +17,12 @@ public class PortalEffect : MonoBehaviour
 	{
 		Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
 		if(!reverseInZ) empty.position = portal.position + new Vector3(playerOffsetFromPortal.x, playerOffsetFromPortal.y, playerOffsetFromPortal.z);
-		else empty.position = portal.position + new Vector3(-playerOffsetFromPortal.x, -playerOffsetFromPortal.y, -playerOffsetFromPortal.z);
+		else if (SceneManager.GetActiveScene().name != "Museum") empty.position = portal.position + new Vector3(-playerOffsetFromPortal.x, -playerOffsetFromPortal.y, -playerOffsetFromPortal.z);
+
+		else if(SceneManager.GetActiveScene().name == "Museum")
+		{
+			empty.position = portal.position + new Vector3(playerOffsetFromPortal.x, -playerOffsetFromPortal.y, playerOffsetFromPortal.z);
+		}
 
 		float angularDifferenceBetweenPortalRotations = Quaternion.Angle(portal.rotation, otherPortal.rotation);
 
@@ -24,10 +30,10 @@ public class PortalEffect : MonoBehaviour
 		Vector3 newCameraDirection = portalRotationalDifference * playerCamera.forward;
 		// if(cameraOffset.y == 180)
 		// {
-		// 	float newXFloat = newCameraDirection.x * 1;
-		// 	float newYFloat = newCameraDirection.y * 1;
+		// 	float newXFloat = newCameraDirection.x * -1;
+		// 	float newYFloat = newCameraDirection.y * -1;
 		// 	newCameraDirection.x = newXFloat;
-		// 	newCameraDirection.y = newXFloat;
+		// 	newCameraDirection.y = newYFloat;
 		// }
 		empty.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
 
@@ -35,7 +41,9 @@ public class PortalEffect : MonoBehaviour
 		thisCamera.rotation = empty.rotation;
 
 		Quaternion currentRotation = thisCamera.rotation;
-		Quaternion yRotation = Quaternion.Euler(0, 180, 0);
+		Quaternion yRotation = Quaternion.Euler(0, -180, 0);
+		//Quaternion yRotation = currentRotation;
+
 
 		thisCamera.rotation = yRotation * currentRotation;
 	}

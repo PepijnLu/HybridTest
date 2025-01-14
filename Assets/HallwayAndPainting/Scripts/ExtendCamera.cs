@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ExtendCamera : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class ExtendCamera : MonoBehaviour
        }
        else
        {
-            transform.position = player.transform.position;
+            transform.position = player.transform.position + new Vector3(0, 0.622f, 0);
             isCameraExtended = false;
 
             if(isRotated)
@@ -66,7 +67,10 @@ public class ExtendCamera : MonoBehaviour
             transform.position = camPos2.transform.position;
 
             Quaternion currentRotation = transform.rotation;
-            Quaternion yRotation = Quaternion.Euler(0, 180, 0);
+            Quaternion yRotation = Quaternion.Euler(0, 0, 0);
+
+            if(SceneManager.GetActiveScene().name != "Museum") {yRotation = Quaternion.Euler(0, 180, 0);}
+            else yRotation = Quaternion.Euler(0, 0, 0);
 
             transform.rotation = yRotation * currentRotation;
             isRotated = true;

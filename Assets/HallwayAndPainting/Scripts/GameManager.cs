@@ -11,13 +11,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(enableVRMode)
+        if(playerController != null)
         {
-            playerController.enabled = false;
-        }
-        else
-        {
-            playerCamera.gameObject.SetActive(true);
+            if(enableVRMode)
+            {
+                playerController.enabled = false;
+            }
+            else
+            {
+                playerCamera.gameObject.SetActive(true);
+            }
         }
     }
 
