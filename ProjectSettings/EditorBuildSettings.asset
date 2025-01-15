@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Renato/Scenes/Test.unity
+    guid: b125748161e3e3c428840fba3bde00f1
+  - enabled: 1
+    path: Assets/HallwayAndPainting/Scenes/Museum.unity
+    guid: f19484f8aa378624fa388a8e9feb2ae8
+  - enabled: 1
     path: Assets/HallwayAndPainting/Scenes/EuclidianHallway.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: Assets/HallwayAndPainting/Scenes/Test.unity
-    guid: b125748161e3e3c428840fba3bde00f1
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 805ee40f24e61d44492757a606295334,
       type: 2}
