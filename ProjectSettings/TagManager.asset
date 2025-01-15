@@ -9,6 +9,7 @@ TagManager:
   - WindowPortal
   - epic collider
   - epic collider 2
+  - Sensor
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - UI
   - PortalPlanes
   - le wall
-  - 
+  - TImeline
   - 
   - 
   - 
