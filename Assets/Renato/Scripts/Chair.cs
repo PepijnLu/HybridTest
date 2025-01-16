@@ -103,10 +103,11 @@ namespace Assets.Renato.Scripts
                 
                 if(colliders.Length > 0) // Check if there are colliders
                 {
-                    Debug.Log("Colliders Found!");
-                    foreach (var collider in colliders) // Lopp through the array
+                    Debug.Log($"{colliders.Length}");
+
+                    foreach (var collider in colliders) 
                     {
-                        if(collider.gameObject.CompareTag("Player")) // If player found
+                        if(collider.gameObject.CompareTag("Player")) 
                         {
                             if(collider.gameObject.name == PlayerMovementDetection.gameObject.name) // Double check
                             {
@@ -116,7 +117,7 @@ namespace Assets.Renato.Scripts
 
                                 float timer = 0f;
 
-                                if(PlayerMovementDetection.headsetSpeed <= .05f && PlayerMovementDetection.controllerSpeed <= .05f) 
+                                if(/*PlayerMovementDetection.headsetSpeed <= .05f && PlayerMovementDetection.controllerSpeed <= .05f*/PlayerMovementDetection.xrRig.position.magnitude < 0.01f) 
                                 {
                                     timer += Time.deltaTime;
 
@@ -137,12 +138,14 @@ namespace Assets.Renato.Scripts
             return false;
         }
         
-        private void FixedCameraPosition(GameObject painting) 
+        private void FixedCamPosition(GameObject painting) 
         {
             Debug.Log("FixedCameraPosition Function Executed...");
             // Stop the movement of the rig
             XROrigin.enabled = false;
             
+            // Disable the tracking component on the cam
+
             float rotationSpeed = 2f;
             
             // Fetch the position of the painting
@@ -200,7 +203,7 @@ namespace Assets.Renato.Scripts
             if(isPlayerSitDown) 
             {
                 Debug.Log("From Transition Function, isPlayerSitDown = true");
-                FixedCameraPosition(painting);
+                FixedCamPosition(painting);
 
                 // yield return new WaitForSeconds(waitDuration);
 
