@@ -1,19 +1,18 @@
 using System.Collections;
-using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Renato.Scripts 
 {
     public class Chair : MonoBehaviour
     {
+        public GameObject player;
         public GameObject painting;
         public float colliderRadius = 1.5f;
         
-        public XROrigin XROrigin;
-        private BodyMovementDetection PlayerMovementDetection;
         [SerializeField] private Camera cam;
-        private Transform childObj;
+        [SerializeField] private Transform childObj;
         
 
         [SerializeField] private MeshRenderer fadeQuadRenderer;
@@ -21,7 +20,8 @@ namespace Assets.Renato.Scripts
         private Material fadeMaterial;	
         
         public bool isCloseBy;
-        public bool isPlayerSitDown;
+
+        private Collision collisionScript;
         
         void Awake()
         {
@@ -29,6 +29,8 @@ namespace Assets.Renato.Scripts
             {
                 childObj = transform.GetChild(0);
             }
+
+            collisionScript = GetComponentInChildren<Collision>();
         }
 
         void Start() 
@@ -42,7 +44,7 @@ namespace Assets.Renato.Scripts
 
         void Update()
         {
-            if(PlayerSitDown()) 
+            if(collisionScript.playerSitDown) 
             {
                 StartCoroutine(Transition(2f, 4f, painting));
             }
@@ -55,21 +57,22 @@ namespace Assets.Renato.Scripts
                 if(!isCloseBy) 
                 {
                     isCloseBy = true;
+                    player = collider.gameObject;
                     Debug.Log("IsCloseBy");   
                     // Transform parent = collider.transform.parent; // Cam Offset
                     // Transform parentsParent = parent.transform.parent; // XR Rig
 
-                    Transform locoSystem = collider.transform.GetChild(1);
+                    // Transform locoSystem = collider.transform.GetChild(1);
 
-                    BodyMovementDetection playerMovementDetection = locoSystem.GetComponentInChildren<BodyMovementDetection>();
+                    // BodyMovementDetection playerMovementDetection = locoSystem.GetComponentInChildren<BodyMovementDetection>();
                     
-                    if(playerMovementDetection != null)
-                    {
-                        PlayerMovementDetection = playerMovementDetection;
+                    // if(playerMovementDetection != null)
+                    // {
+                        // PlayerMovementDetection = playerMovementDetection;
                 
                         // Visual effect...
                         SomeVisualEffect();
-                    }
+                    // }
                 }
             }
         }
@@ -93,58 +96,65 @@ namespace Assets.Renato.Scripts
             // yield break;
         } 
 
-        private bool PlayerSitDown() 
-        {
-            Debug.Log("PlayerSitDown Function Executed...");
-            if(isCloseBy) 
-            {
-                // Store the colliders in the array
-                Collider[] colliders = Physics.OverlapSphere(childObj.position, colliderRadius);
+        // private bool PlayerSitDown() 
+        // {
+        //     Debug.Log("PlayerSitDown Function Executed...");
+        //     if(isCloseBy) 
+        //     {
+        //         // Store the colliders in the array
+        //         Collider[] colliders = Physics.OverlapSphere(childObj.position, colliderRadius);
                 
-                if(colliders.Length > 0) // Check if there are colliders
-                {
-                    Debug.Log($"{colliders.Length}");
+        //         if(colliders.Length > 0) // Check if there are any colliders
+        //         {
+        //             Debug.Log($"Colliders length: {colliders.Length}");
 
-                    foreach (var collider in colliders) 
-                    {
-                        if(collider.gameObject.CompareTag("Player")) 
-                        {
-                            if(collider.gameObject.name == PlayerMovementDetection.gameObject.name) // Double check
-                            {
-                                Debug.Log("The same Player");
+        //             foreach (var collider in colliders) 
+        //             {
+        //                 if(collider.CompareTag("Player")) 
+        //                 {
+        //                     Debug.Log($"Collider name: {collider.gameObject.name} + PlayerMovementDetection: {PlayerMovementDetection.gameObject.name}");
+        //                     if(collider.gameObject.name == PlayerMovementDetection.gameObject.name) // Double check
+        //                     {
+        //                         Debug.Log("The same Player");
 
-                                XROrigin = collider.GetComponent<XROrigin>(); // Fetch the XROrigin script
+        //                         XROrigin = collider.GetComponent<XROrigin>(); // Fetch the XROrigin script
 
-                                float timer = 0f;
+        //                         float timer = 0f;
 
-                                if(/*PlayerMovementDetection.headsetSpeed <= .05f && PlayerMovementDetection.controllerSpeed <= .05f*/PlayerMovementDetection.xrRig.position.magnitude < 0.01f) 
-                                {
-                                    timer += Time.deltaTime;
+        //                         if(/*PlayerMovementDetection.headsetSpeed <= .05f && PlayerMovementDetection.controllerSpeed <= .05f*/PlayerMovementDetection.xrRig.position.magnitude < 0.01f) 
+        //                         {
+        //                             timer += Time.deltaTime;
 
-                                    if(timer >= 2f && !isPlayerSitDown) 
-                                    {
-                                        isPlayerSitDown = true;
-                                        Debug.Log("There is no movement detected after the player collided with the chair...");
-                                        return true;
-                                    } 
-                                }
-                            }
-                        }
-                        else{ Debug.Log("Player is not found"); return false; }  
-                    }
-                } 
-            }
+        //                             if(timer >= 2f && !isPlayerSitDown) 
+        //                             {
+        //                                 isPlayerSitDown = true;
+        //                                 Debug.Log("There is no movement detected after the player collided with the chair...");
+        //                                 return true;
+        //                             } 
+        //                         }
+        //                     }
+        //                 }
+        //                 else{ Debug.Log("Player is not found"); return false; }  
+        //             }
+        //         } 
+        //     }
 
-            return false;
-        }
+        //     return false;
+        // }
         
         private void FixedCamPosition(GameObject painting) 
         {
             Debug.Log("FixedCameraPosition Function Executed...");
+            
             // Stop the movement of the rig
-            XROrigin.enabled = false;
+            Collision collisionScript = childObj.GetComponent<Collision>();
+            
+            collisionScript.xROrigin.enabled = false;
             
             // Disable the tracking component on the cam
+            Transform cam = player.transform.GetChild(0).transform.GetChild(0);
+            TrackedPoseDriver trackedPoseDriver = cam.GetComponent<TrackedPoseDriver>();
+            trackedPoseDriver.enabled = false;
 
             float rotationSpeed = 2f;
             
@@ -164,7 +174,40 @@ namespace Assets.Renato.Scripts
             }
         }
 
-        private IEnumerator CameraZoomIn(float duration) 
+        // private IEnumerator CameraZoomIn(float duration) 
+        // {
+        //     Debug.Log("CameraZoomIn Coroutine Started...");
+        //     Vector3 startPosition = cam.transform.position;
+        //     Vector3 targetPosition = cam.transform.position + Vector3.forward; // Move forward along the z-axis
+
+        //     float elapsedTime = 0f;
+
+        //     while(elapsedTime < duration) 
+        //     {
+        //         float t = elapsedTime / duration;
+        //         cam.transform.position = Vector3.Lerp(startPosition, Vector3.forward, t);
+        //         Debug.Log("Camera is zooming in");
+        //         elapsedTime += Time.deltaTime;
+
+        //         // Fetch the distanc between the cam and the painting
+        //         float distance = Vector3.Distance(cam.transform.position, targetPosition);
+
+        //         // If the distance is 1 unit away from the painting
+        //         if(distance <= 1f) 
+        //         {
+        //             Debug.Log("Distance is 1 unit away from the painting");
+        //             cam.transform.position = targetPosition;
+        //             yield break;
+        //         }
+    
+        //         yield return null;
+        //     }
+
+        //     // Ensure the camera reaches the exact target position at the end.
+        //     cam.transform.position = targetPosition;
+        // }
+
+        private IEnumerator CameraZoomIn(float duration)
         {
             Debug.Log("CameraZoomIn Coroutine Started...");
             Vector3 startPosition = cam.transform.position;
@@ -172,24 +215,29 @@ namespace Assets.Renato.Scripts
 
             float elapsedTime = 0f;
 
-            while(elapsedTime < duration) 
+            while (elapsedTime < duration)
             {
+                // Calculate t using an easing function
                 float t = elapsedTime / duration;
-                cam.transform.position = Vector3.Lerp(startPosition, Vector3.forward, t);
+                t *= t; // Quadratic easing (ease-in)
+
+                // Interpolate position with eased t
+                cam.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
                 Debug.Log("Camera is zooming in");
+
                 elapsedTime += Time.deltaTime;
 
-                // Fetch the distanc between the cam and the painting
+                // Fetch the distance between the cam and the painting
                 float distance = Vector3.Distance(cam.transform.position, targetPosition);
 
                 // If the distance is 1 unit away from the painting
-                if(distance <= 1f) 
+                if (distance <= 1f)
                 {
                     Debug.Log("Distance is 1 unit away from the painting");
                     cam.transform.position = targetPosition;
                     yield break;
                 }
-    
+
                 yield return null;
             }
 
@@ -200,21 +248,19 @@ namespace Assets.Renato.Scripts
         private IEnumerator Transition(float waitDuration, float transitionDuration, GameObject painting) 
         {
             Debug.Log("Transition Coroutine Started...");
-            if(isPlayerSitDown) 
-            {
-                Debug.Log("From Transition Function, isPlayerSitDown = true");
-                FixedCamPosition(painting);
+        
+            FixedCamPosition(painting);
 
-                // yield return new WaitForSeconds(waitDuration);
+            yield return new WaitForSeconds(waitDuration);
 
-                // StartCoroutine(CameraZoomIn(transitionDuration));
+            StartCoroutine(CameraZoomIn(transitionDuration));
 
-                // yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
 
-                // StartCoroutine(AfterTransition("Museum"));
+            StartCoroutine(AfterTransition("Museum"));
 
-                yield break;
-            }
+            yield break;
+            
         }
 
         private IEnumerator AfterTransition(string nextSceneName) 
