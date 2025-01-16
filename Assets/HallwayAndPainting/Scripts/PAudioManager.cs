@@ -14,7 +14,7 @@ public class PAudioManager : MonoBehaviour
 
     [SerializeField] List<Vector3> paintingLocations;
     [SerializeField] List<AudioSource> paintingAudioSources;
-    List<AudioSource> audiosPlayed;
+    List<AudioSource> audiosPlayed = new();
 
     void Start()
     {
@@ -46,10 +46,12 @@ public class PAudioManager : MonoBehaviour
         for(int i = 0; i < paintingAudioSources.Count; i++)
         {
             float difference = (paintingLocations[i] - playerTransform.position).magnitude;
+            if(i == 1) Debug.Log("Difference to painting 1 = " + difference);
             if(difference <= audioPlayRange)
             {
                 if(!audiosPlayed.Contains(paintingAudioSources[i])) 
                 {
+                    Debug.Log($"Audio Playing: {paintingAudioSources[i].name}. Range: {difference}");
                     audiosPlayed.Add(paintingAudioSources[i]);
                     paintingAudioSources[i].Play();
                 }
