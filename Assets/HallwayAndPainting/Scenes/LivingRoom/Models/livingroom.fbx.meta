@@ -22,13 +22,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
+      name: 574
+    second: {fileID: 2800000, guid: 506092ea2254dd842b7462fc641dae16, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
       name: GWC Horrible 80s Carpets 04_BaseColor
-    second: {fileID: 2800000, guid: 17e2d0805f7927c43b99297d03080a38, type: 3}
+    second: {fileID: 2800000, guid: 305d0cd69add53c41ae4ad97aab1796e, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: GWC Horrible 80s Carpets 04_Normal
-    second: {fileID: 2800000, guid: 51a0886c91a9a1c4bab163cb28d470c9, type: 3}
+    second: {fileID: 2800000, guid: 14827e7ddad9fdc44871150128f05318, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
