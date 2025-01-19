@@ -17,12 +17,7 @@ public class PortalEffect : MonoBehaviour
 	{
 		Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
 		if(!reverseInZ) empty.position = portal.position + new Vector3(playerOffsetFromPortal.x, playerOffsetFromPortal.y, playerOffsetFromPortal.z);
-		else if (SceneManager.GetActiveScene().name != "Museum") empty.position = portal.position + new Vector3(-playerOffsetFromPortal.x, -playerOffsetFromPortal.y, -playerOffsetFromPortal.z);
-
-		else if(SceneManager.GetActiveScene().name == "Museum")
-		{
-			empty.position = portal.position + new Vector3(playerOffsetFromPortal.x, -playerOffsetFromPortal.y, playerOffsetFromPortal.z);
-		}
+		else empty.position = portal.position + new Vector3(-playerOffsetFromPortal.z, -playerOffsetFromPortal.y, playerOffsetFromPortal.x);
 
 		float angularDifferenceBetweenPortalRotations = Quaternion.Angle(portal.rotation, otherPortal.rotation);
 

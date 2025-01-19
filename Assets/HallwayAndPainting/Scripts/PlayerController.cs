@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     void LookAround()
     {
-        if(SceneManager.GetActiveScene().name == "EuclidianHallway")
+        if(SceneManager.GetActiveScene().name == "EuclidianHallway" )
         {
             // Get mouse input for rotation
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;

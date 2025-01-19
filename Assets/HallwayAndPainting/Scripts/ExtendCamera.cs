@@ -12,8 +12,6 @@ public class ExtendCamera : MonoBehaviour
     bool isCameraExtended, isCameraPortaled, isMoving, isRotated;
     //public float duration = 0.2f, moveDistance = 1f;
     public float camMoveSpeed = 5f, camSmoothTime = 0.1f, camMoveTime = 0.5f;
-    Vector3 windowCamStartLoc;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -28,25 +26,26 @@ public class ExtendCamera : MonoBehaviour
        {
             ExtendPlayerCamera();
        }
-       else
-       {
-            transform.position = player.transform.position + new Vector3(0, 0.622f, 0);
-            isCameraExtended = false;
+    //    else
+    //    {
+    //         transform.position = player.transform.position;
+    //         isCameraExtended = false;
 
-            if(isRotated)
-            {
-                Quaternion currentRotation = transform.rotation;
-                Quaternion yRotation = Quaternion.Euler(0, 180, 0);
+    //         if(isRotated)
+    //         {
+    //             Quaternion currentRotation = transform.rotation;
+    //             Quaternion yRotation = Quaternion.Euler(0, 90, 0);
 
-                transform.rotation = yRotation * currentRotation;
-                isRotated = false;
-            }
+    //             transform.rotation = yRotation * currentRotation;
+    //             gameObject.transform.SetParent(player.transform);
+    //             isRotated = false;
+    //         }
 
-            // usableWindowCam.enabled = false;
-            // originalPlayerCam.enabled = true;
-            playerController.playerCamera = originalPlayerCam.transform;
-            StopCoroutine(MoveForwardCoroutine());
-       } 
+    //         // usableWindowCam.enabled = false;
+    //         // originalPlayerCam.enabled = true;
+    //         playerController.playerCamera = originalPlayerCam.transform;
+    //         StopCoroutine(MoveForwardCoroutine());
+    //    } 
     }
 
     void ExtendPlayerCamera()
@@ -64,16 +63,24 @@ public class ExtendCamera : MonoBehaviour
         if(collider.gameObject.tag == "WindowPortal")
         {
             Debug.Log("Collision");
+
+            Vector3 offset = transform.position - player.transform.position;
+            gameObject.transform.SetParent(null);
+
             transform.position = camPos2.transform.position;
 
             Quaternion currentRotation = transform.rotation;
             Quaternion yRotation = Quaternion.Euler(0, 0, 0);
 
             if(SceneManager.GetActiveScene().name != "Museum") {yRotation = Quaternion.Euler(0, 180, 0);}
-            else yRotation = Quaternion.Euler(0, 0, 0);
+            else yRotation = Quaternion.Euler(0, -90, 0);
 
             transform.rotation = yRotation * currentRotation;
             isRotated = true;
+
+            Vector3 targetDestination = transform.position - offset;
+            player.transform.position = targetDestination;
+            gameObject.transform.SetParent(player.transform);
 
             // usableWindowCam.enabled = true;
             // originalPlayerCam.enabled = false;
@@ -85,6 +92,7 @@ public class ExtendCamera : MonoBehaviour
 
     private IEnumerator MoveForwardCoroutine()
     {
+        //gameObject.transform.SetParent(null);
         isMoving = true;
         float duration = 0f;
         while(duration < camMoveTime)
