@@ -1,4 +1,4 @@
-using System.Collections;
+    	using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
@@ -9,7 +9,8 @@ namespace Assets.Renato.Scripts
     {
         public GameObject player;
         public GameObject painting;
-        public float colliderRadius = 1.5f;
+        // public float colliderRadius = 1.5f;
+        public float distanceFromPainting = 2f;
         
         [SerializeField] private Camera cam;
         [SerializeField] private Transform childObj;
@@ -231,7 +232,7 @@ namespace Assets.Renato.Scripts
                 float distance = Vector3.Distance(cam.transform.position, targetPosition);
 
                 // If the distance is 1 unit away from the painting
-                if (distance <= 1f)
+                if (distance <= distanceFromPainting)
                 {
                     Debug.Log("Distance is 1 unit away from the painting");
                     cam.transform.position = targetPosition;

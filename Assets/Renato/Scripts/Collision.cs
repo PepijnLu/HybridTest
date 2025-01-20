@@ -3,19 +3,26 @@ using UnityEngine;
 
 namespace Assets.Renato.Scripts 
 {
+    [RequireComponent(typeof(Rigidbody))] [RequireComponent(typeof(SphereCollider))]
     public class Collision : MonoBehaviour
     {
         public bool playerSitDown;
-        public float colliderRadius = 1f;
+        // public float colliderRadius = 1f;
         public XROrigin xROrigin;
-        public BodyMovementDetection playerMovementDetection;
+        // public BodyMovementDetection playerMovementDetection;
         float timer = 0f;
+        // private SphereCollider sphereCollider;
+
+        // void Start() 
+        // {
+        //     sphereCollider = GetComponent<SphereCollider>();
+        // }
         
         private void OnTriggerStay(Collider collider) 
         {
             if(collider.CompareTag("Player")) 
             {
-                xROrigin = collider.GetComponent<XROrigin>();
+                if(xROrigin == null) xROrigin = collider.GetComponent<XROrigin>();
 
                 // Transform locoSystem = collider.transform.GetChild(1);
                 // BodyMovementDetection bodyMovementDetection = locoSystem.GetComponentInChildren<BodyMovementDetection>();
@@ -36,16 +43,16 @@ namespace Assets.Renato.Scripts
         }
 
         
-        [SerializeField] private Color sphereColor = Color.green; // The color of the sphere in the Scene view
+        // [SerializeField] private Color sphereColor = Color.green; // The color of the sphere in the Scene view
 
-        private void OnDrawGizmos()
-        {
-            // Set the Gizmo color
-            Gizmos.color = sphereColor;
+        // private void OnDrawGizmos()
+        // {
+        //     // Set the Gizmo color
+        //     Gizmos.color = sphereColor;
 
-            // Draw the sphere at the given position and radius
-            Gizmos.DrawWireSphere(transform.position, colliderRadius);
+        //     // Draw the sphere at the given position and radius
+        //     Gizmos.DrawWireSphere(transform.position, sphereCollider.radius);
             
-        }
+        // }
     }
 }
