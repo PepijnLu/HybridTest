@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63fbe09434b9b8449129fb8905ae24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableVRMode: 1
+  enableVRMode: 0
   playerController: {fileID: 1554039155}
   playerCamera: {fileID: 330585545}
   vrCamera: {fileID: 1549797901}
@@ -1474,7 +1474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &292078433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2557,7 +2557,7 @@ Transform:
   m_GameObject: {fileID: 496450300}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.37, y: 0, z: 50}
+  m_LocalPosition: {x: -6.37, y: 0, z: 413}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2593,8 +2593,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527277869}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -1.5539987, y: 1.0789999, z: 4.373001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6184,8 +6184,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1643212840}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -1.5539987, y: 1.0789999, z: 4.373001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7995,13 +7995,12 @@ MonoBehaviour:
   vrHeadset: {fileID: 4619016992311319540}
   xrRig: {fileID: 1948440777187726721}
   rightController: {fileID: 6438080226659357912}
-  headsetDistanceThreshold: 0.2
-  controllerDistanceThreshold: 0.2
-  minCheckInterval: 0.05
-  maxCheckInterval: 0.15
+  speedThreshold: 0.5
+  directionAlignmentThreshold: 0.9
   additionalSpeed: 75
   smoothingFactor: 0.1
-  headsetDistanceMoved: 0
+  controllerSpeed: 0
+  headsetSpeed: 0
 --- !u!65 &3166805298993765559
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8974,7 +8973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!120 &7965734501990217415
 LineRenderer:
   serializedVersion: 2
