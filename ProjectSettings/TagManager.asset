@@ -10,6 +10,8 @@ TagManager:
   - epic collider
   - epic collider 2
   - Sensor
+  - projectile
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - PortalPlanes
   - le wall
   - TImeline
-  - 
+  - Poke
   - 
   - 
   - 

@@ -6,8 +6,10 @@ public class BodyMovementDetection : MonoBehaviour
     public Transform xrRig; // Reference to the XR Rig (player object)
     public Transform rightController; // Reference to the right controller
 
-    public float speedThreshold = 0.5f; // Minimum speed to detect motion
-    public float directionAlignmentThreshold = 0.9f; // Cosine similarity threshold for direction alignment (1 = perfectly aligned)
+    // public float speedThreshold = 0.5f; // Minimum speed to detect motion
+    public float VRspeedThreshold = 0.05f, controllerSpeedThreshold = 0.05f; // Speed thresholds
+
+    public float directionAlignmentThreshold = 0.95f; // Cosine similarity threshold for direction alignment (1 = perfectly aligned)
     public float additionalSpeed = 2f; // Additional movement speed multiplier
     public float smoothingFactor = 0.1f; // Smoothing factor to avoid jitter
 
@@ -21,6 +23,9 @@ public class BodyMovementDetection : MonoBehaviour
 
     // private float motionConsistencyTime = 0f;
     // private const float requiredConsistencyDuration = 0.1f;
+
+    private Vector3 lastValidMovementDirection = Vector3.zero; // Last valid movement direction
+
 
     void Start()
     {
@@ -51,33 +56,38 @@ public class BodyMovementDetection : MonoBehaviour
         headsetSpeed = headsetVelocity.magnitude;
         controllerSpeed = controllerVelocity.magnitude;
 
-        if (headsetSpeed < 0.05f) headsetSpeed = 0f;
-        if (controllerSpeed < 0.05f) controllerSpeed = 0f;
+        if (headsetSpeed < VRspeedThreshold) headsetSpeed = 0f;
+        if (controllerSpeed < controllerSpeedThreshold) controllerSpeed = 0f;
         
         // Debug.Log($"HeadsetSpeed: {headsetSpeed}.... | .... ControllerSpeed {controllerSpeed}");
-    
-        
-        if(timer >= 1f) 
-        {
-            Debug.Log($"HeadsetSpeed: {headsetSpeed}.... | .... ControllerSpeed {controllerSpeed}");
-            timer = 0f;
-        }
 
         // Calculate direction alignment using dot product
         float directionAlignment = Vector3.Dot(headsetVelocity.normalized, controllerVelocity.normalized);
 
         // Check if both velocities exceed the speed threshold and are aligned
-        if (headsetSpeed >= speedThreshold && controllerSpeed >= speedThreshold && directionAlignment >= directionAlignmentThreshold)
+        if (headsetSpeed >= VRspeedThreshold && controllerSpeed >= controllerSpeedThreshold && directionAlignment >= directionAlignmentThreshold)
         {
             // Calculate the movement direction based on the headset's motion
             Vector3 movementDirection = headsetVelocity.normalized;
 
+            lastValidMovementDirection = movementDirection;
+
             // Apply additional speed
-            targetVelocity = xrRig.position + additionalSpeed * Time.deltaTime * movementDirection;
+            targetVelocity = xrRig.position + additionalSpeed * Time.deltaTime * lastValidMovementDirection;
 
             // Smooth movement to avoid jitter
             xrRig.position = Vector3.SmoothDamp(xrRig.position, targetVelocity, ref currentVelocity, smoothingFactor);
+            // targetVelocity = xrRig.position + additionalSpeed * Time.deltaTime * movementDirection;
+
         }
+        else 
+        {
+            // Decay movement direction to stop smoothly
+            lastValidMovementDirection = Vector3.Lerp(lastValidMovementDirection, Vector3.zero, smoothingFactor);
+            targetVelocity = xrRig.position + additionalSpeed * Time.deltaTime * lastValidMovementDirection;
+        }
+        
+        // xrRig.position = Vector3.SmoothDamp(xrRig.position, targetVelocity, ref currentVelocity, smoothingFactor);
 
         // Update previous positions
         headsetPreviousPosition = vrHeadset.position;
