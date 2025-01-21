@@ -99,14 +99,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9a1886413ced74b9138058044a673f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  xROrigin: {fileID: 0}
   painting: {fileID: 0}
-  colliderRadius: 1
+  distanceFromPainting: 2
   cam: {fileID: 0}
   childObj: {fileID: 2523703135173859843}
+  trackedPoseDriver: {fileID: 0}
   fadeQuadRenderer: {fileID: 0}
-  fadeDuration: 2
+  fadeDuration: 1
   isCloseBy: 0
+  cameraZoomDuration: 2
 --- !u!135 &630216895230906407
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -229,10 +231,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSitDown: 0
-  colliderRadius: 1
-  xROrigin: {fileID: 0}
-  playerMovementDetection: {fileID: 0}
-  sphereColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!135 &6299802128788084622
 SphereCollider:
   m_ObjectHideFlags: 0
