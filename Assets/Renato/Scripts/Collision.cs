@@ -22,7 +22,7 @@ namespace Assets.Renato.Scripts
         {
             if(collider.CompareTag("Player")) 
             {
-                if(xROrigin == null) xROrigin = collider.GetComponent<XROrigin>();
+                // xROrigin = collider.GetComponent<XROrigin>();
 
                 // Transform locoSystem = collider.transform.GetChild(1);
                 // BodyMovementDetection bodyMovementDetection = locoSystem.GetComponentInChildren<BodyMovementDetection>();

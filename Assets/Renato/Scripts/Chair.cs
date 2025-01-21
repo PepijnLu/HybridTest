@@ -7,13 +7,14 @@ namespace Assets.Renato.Scripts
 {
     public class Chair : MonoBehaviour
     {
-        public GameObject player;
+        public GameObject cameraObj;
         public GameObject painting;
         // public float colliderRadius = 1.5f;
         public float distanceFromPainting = 2f;
         
         [SerializeField] private Camera cam;
         [SerializeField] private Transform childObj;
+        [SerializeField] TrackedPoseDriver trackedPoseDriver;
         
 
         [SerializeField] private MeshRenderer fadeQuadRenderer;
@@ -47,7 +48,7 @@ namespace Assets.Renato.Scripts
         {
             if(collisionScript.playerSitDown) 
             {
-                StartCoroutine(Transition(2f, 4f, painting));
+                StartCoroutine(Transition(1f, 2f, painting));
             }
         }
 
@@ -58,7 +59,7 @@ namespace Assets.Renato.Scripts
                 if(!isCloseBy) 
                 {
                     isCloseBy = true;
-                    player = collider.gameObject;
+                    //cameraObj = collider.gameObject;
                     Debug.Log("IsCloseBy");   
                     // Transform parent = collider.transform.parent; // Cam Offset
                     // Transform parentsParent = parent.transform.parent; // XR Rig
@@ -153,8 +154,6 @@ namespace Assets.Renato.Scripts
             collisionScript.xROrigin.enabled = false;
             
             // Disable the tracking component on the cam
-            Transform cam = player.transform.GetChild(0).transform.GetChild(0);
-            TrackedPoseDriver trackedPoseDriver = cam.GetComponent<TrackedPoseDriver>();
             trackedPoseDriver.enabled = false;
 
             float rotationSpeed = 2f;
@@ -174,39 +173,6 @@ namespace Assets.Renato.Scripts
                 cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
         }
-
-        // private IEnumerator CameraZoomIn(float duration) 
-        // {
-        //     Debug.Log("CameraZoomIn Coroutine Started...");
-        //     Vector3 startPosition = cam.transform.position;
-        //     Vector3 targetPosition = cam.transform.position + Vector3.forward; // Move forward along the z-axis
-
-        //     float elapsedTime = 0f;
-
-        //     while(elapsedTime < duration) 
-        //     {
-        //         float t = elapsedTime / duration;
-        //         cam.transform.position = Vector3.Lerp(startPosition, Vector3.forward, t);
-        //         Debug.Log("Camera is zooming in");
-        //         elapsedTime += Time.deltaTime;
-
-        //         // Fetch the distanc between the cam and the painting
-        //         float distance = Vector3.Distance(cam.transform.position, targetPosition);
-
-        //         // If the distance is 1 unit away from the painting
-        //         if(distance <= 1f) 
-        //         {
-        //             Debug.Log("Distance is 1 unit away from the painting");
-        //             cam.transform.position = targetPosition;
-        //             yield break;
-        //         }
-    
-        //         yield return null;
-        //     }
-
-        //     // Ensure the camera reaches the exact target position at the end.
-        //     cam.transform.position = targetPosition;
-        // }
 
         private IEnumerator CameraZoomIn(float duration)
         {
@@ -268,7 +234,7 @@ namespace Assets.Renato.Scripts
         {
             Debug.Log("AfterTransition Coroutine Started...");
             // Fade out to black
-            yield return StartCoroutine(Fade(1f));
+            yield return StartCoroutine(Fade(.25f));
 
             // Load the next scene
             SceneManager.LoadScene(nextSceneName);

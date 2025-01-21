@@ -137,6 +137,10 @@ public class BodyMovementDetection : MonoBehaviour
         if (vrHeadset == null || xrRig == null || rightController == null)
             return;
 
+        // // Directly sync XR rig to VR headset's XZ position
+        // Vector3 headsetXZPosition = new(vrHeadset.position.x, 0, vrHeadset.position.z);
+        // xrRig.position = headsetXZPosition;
+
         // Calculate velocities
         Vector3 headsetVelocity = (vrHeadset.position - headsetPreviousPosition) / Time.deltaTime;
         Vector3 controllerVelocity = (rightController.position - controllerPreviousPosition) / Time.deltaTime;
@@ -177,12 +181,23 @@ public class BodyMovementDetection : MonoBehaviour
 
                 // Smooth movement to avoid jitter
                 xrRig.position = Vector3.SmoothDamp(xrRig.position, targetVelocity, ref currentVelocity, smoothingFactor);
+
+                // Vector3 campPos = new Vector3(vrHeadset.position.x, 0, vrHeadset.position.z);
+                // xrRig.position = campPos;
+
+                // Directly sync XR rig to VR headset's XZ position
+                // Vector3 headsetXZPosition = new(vrHeadset.position.x, 0, vrHeadset.position.z);
+                // xrRig.position = headsetXZPosition;
             }
             else
             {
                 // Decay movement direction to stop smoothly
                 lastValidMovementDirection = Vector3.Lerp(lastValidMovementDirection, Vector3.zero, smoothingFactor);
                 targetVelocity = xrRig.position + additionalSpeed * Time.deltaTime * lastValidMovementDirection;
+                xrRig.position = Vector3.SmoothDamp(xrRig.position, targetVelocity, ref currentVelocity, smoothingFactor);
+
+                // Vector3 headsetXZPosition = new(vrHeadset.position.x, 0, vrHeadset.position.z);
+                // xrRig.position = headsetXZPosition;
             }
         }
 
