@@ -13,11 +13,9 @@ public class SteamWipe : MonoBehaviour
     {
         // Initialize the mask texture (512x512 for performance)
         maskTexture = new Texture2D(512, 512, TextureFormat.RGBA32, false);
-        ClearMask();
+        ClearMask(); // Set initial mask to "steamed" (white)
         steamMaterial.SetTexture("_Mask", maskTexture);
     }
-
-    // public void 
 
     void Update()
     {
@@ -29,22 +27,23 @@ public class SteamWipe : MonoBehaviour
                 if (hit.collider.gameObject == gameObject) // Check if it's the mirror
                 {
                     Vector2 pixelUV = hit.textureCoord;
-                    DrawOnMask(pixelUV);
+                    DrawOnMask(pixelUV); // Draw the wipe effect on the mask
                 }
             }
         }
     }
 
+    // Clear the mask and set it to "steamed" (white)
     void ClearMask()
     {
-        // Initialize the mask with a fully steamed texture (black)
         Color32[] clearColor = maskTexture.GetPixels32();
         for (int i = 0; i < clearColor.Length; i++)
-            clearColor[i] = Color.black;
+            clearColor[i] = Color.white; // Start with fully steamed (white)
         maskTexture.SetPixels32(clearColor);
         maskTexture.Apply();
     }
 
+    // Draw the wipe effect on the mask (reveal the clear areas)
     void DrawOnMask(Vector2 uv)
     {
         // Convert UV to mask texture coordinates
@@ -61,7 +60,9 @@ public class SteamWipe : MonoBehaviour
                 {
                     int px = Mathf.Clamp(x + i, 0, maskTexture.width - 1);
                     int py = Mathf.Clamp(y + j, 0, maskTexture.height - 1);
-                    maskTexture.SetPixel(px, py, Color.white);
+
+                    // Set the pixel to black to reveal the clear texture
+                    maskTexture.SetPixel(px, py, Color.black); // Clear area (black)
                 }
             }
         }
