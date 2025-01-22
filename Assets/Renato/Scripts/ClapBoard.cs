@@ -146,42 +146,42 @@ public class ClapBoard : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Space)) 
-        {
-            Debug.Log("Input detected");
-            if (hingePoint != null)
-            {
-                // Smoothly rotate the hinge point to align with the target pivot
-                hingePoint.rotation = Quaternion.RotateTowards(
-                    hingePoint.rotation,
-                    targetPivot.rotation,
-                    rotationSpeed * Time.deltaTime
-                );
-
-                // Check if the rotation is complete
-                if (Quaternion.Angle(hingePoint.rotation, targetPivot.rotation) < 0.1f)
-                {
-                    hingePoint.rotation = targetPivot.rotation; // Snap to final rotation
-                    shouldClose = false; // Stop rotating
-                }
-            }
-        }
-        // if (shouldClose && hingePoint != null)
+        // if(Input.GetKey(KeyCode.Space)) 
         // {
-        //     // Smoothly rotate the hinge point to align with the target pivot
-        //     hingePoint.rotation = Quaternion.RotateTowards(
-        //         hingePoint.rotation,
-        //         targetPivot.rotation,
-        //         rotationSpeed * Time.deltaTime
-        //     );
-
-        //     // Check if the rotation is complete
-        //     if (Quaternion.Angle(hingePoint.rotation, targetPivot.rotation) < 0.1f)
+        //     Debug.Log("Input detected");
+        //     if (hingePoint != null)
         //     {
-        //         hingePoint.rotation = targetPivot.rotation; // Snap to final rotation
-        //         shouldClose = false; // Stop rotating
+        //         // Smoothly rotate the hinge point to align with the target pivot
+        //         hingePoint.rotation = Quaternion.RotateTowards(
+        //             hingePoint.rotation,
+        //             targetPivot.rotation,
+        //             rotationSpeed * Time.deltaTime
+        //         );
+
+        //         // Check if the rotation is complete
+        //         if (Quaternion.Angle(hingePoint.rotation, targetPivot.rotation) < 0.1f)
+        //         {
+        //             hingePoint.rotation = targetPivot.rotation; // Snap to final rotation
+        //             shouldClose = false; // Stop rotating
+        //         }
         //     }
         // }
+        if (shouldClose && hingePoint != null)
+        {
+            // Smoothly rotate the hinge point to align with the target pivot
+            hingePoint.rotation = Quaternion.RotateTowards(
+                hingePoint.rotation,
+                targetPivot.rotation,
+                rotationSpeed * Time.deltaTime
+            );
+
+            // Check if the rotation is complete
+            if (Quaternion.Angle(hingePoint.rotation, targetPivot.rotation) < 0.1f)
+            {
+                hingePoint.rotation = targetPivot.rotation; // Snap to final rotation
+                shouldClose = false; // Stop rotating
+            }
+        }
     }
 
     public void ResetClapboard()
