@@ -605,6 +605,8 @@ MonoBehaviour:
   steamMaterial: {fileID: 2100000, guid: 424876feb6b31a14eb0e351f0b5918b3, type: 2}
   playerCamera: {fileID: 961739752}
   wipeRadius: 0.1
+  fadeDuration: 2
+  paintings: []
 --- !u!1 &1160234425
 GameObject:
   m_ObjectHideFlags: 0

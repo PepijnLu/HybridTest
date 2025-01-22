@@ -26,6 +26,8 @@ namespace Assets.Renato.Scripts
 
         private Collision collisionScript;
         public float cameraZoomDuration = 2f;
+
+        public Management management;
         
         void Awake()
         {
@@ -50,7 +52,7 @@ namespace Assets.Renato.Scripts
         {
             if(collisionScript.playerSitDown) 
             {
-                StartCoroutine(Transition(1.5f, cameraZoomDuration, painting));
+                StartCoroutine(Transition(1f, cameraZoomDuration, painting));
             }
         }
 
@@ -61,10 +63,10 @@ namespace Assets.Renato.Scripts
                 if(!isCloseBy) 
                 {
                     isCloseBy = true;
-                    Debug.Log("IsCloseBy");   
-           
+                    Debug.Log("IsCloseBy");
+                    
                     // Visual effect...
-                    SomeVisualEffect();
+                    StartCoroutine(SomeVisualEffect());
                 }
             }
         }
@@ -128,6 +130,9 @@ namespace Assets.Renato.Scripts
  
         private IEnumerator CameraZoomIn(float duration)
         {
+            // Store the world position of the xr rig
+            management.lastWorldPosition = xROrigin.transform.position; 
+
             Debug.Log("CameraZoomIn Coroutine Started...");
 
             Vector3 startPosition = cam.transform.position;
@@ -161,10 +166,6 @@ namespace Assets.Renato.Scripts
 
                     yield return new WaitForSeconds(1f);
 
-                    // Trigger the transition to the next scene
-                    // StartCoroutine(AfterTransition("Museum"));
-                    yield return StartCoroutine(Fade("Museum", 1f));
-
                     yield break;
                 }
 
@@ -187,12 +188,16 @@ namespace Assets.Renato.Scripts
 
             yield return StartCoroutine(CameraZoomIn(transitionDuration));
 
+            // Delete the chair
+            // Destroy(gameObject);
+            yield return StartCoroutine(Fade("Car", 255f));
+
             yield break;
             
         }
 
         // Coroutine to fade the quad in or out
-        private IEnumerator Fade(string nextSceneName, float targetAlpha)
+        public IEnumerator Fade(string nextSceneName, float targetAlpha)
         {
             float startAlpha = fadeMaterial.color.a;
             float elapsedTime = 0f;

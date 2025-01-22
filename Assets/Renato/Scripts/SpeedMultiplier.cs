@@ -221,6 +221,8 @@ public class BodyMovementDetection : MonoBehaviour
 
     private Vector3 lastValidMovementDirection = Vector3.zero;
 
+    public bool isMoving;
+
     void Start()
     {
         if (vrHeadset != null)
@@ -285,6 +287,8 @@ public class BodyMovementDetection : MonoBehaviour
 
             // Smooth movement to avoid jitter
             xrRig.position = Vector3.SmoothDamp(xrRig.position, targetVelocity, ref currentVelocity, smoothingFactor);
+
+            isMoving = true;
         }
         else
         {
@@ -292,6 +296,8 @@ public class BodyMovementDetection : MonoBehaviour
             lastValidMovementDirection = Vector3.Lerp(lastValidMovementDirection, Vector3.zero, smoothingFactor);
             targetVelocity = xrRig.position + additionalSpeed * Time.deltaTime * lastValidMovementDirection;
             xrRig.position = Vector3.SmoothDamp(xrRig.position, targetVelocity, ref currentVelocity, smoothingFactor);
+
+            isMoving = false;
         }
 
         // Update previous positions and rotations
