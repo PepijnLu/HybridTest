@@ -10,7 +10,6 @@ namespace Assets.Renato.Scripts
     {
         public XROrigin xROrigin;
         public GameObject painting;
-        // public float colliderRadius = 1.5f;
         public float distanceFromPainting = 2f;
         
         [SerializeField] private Camera cam;
@@ -28,6 +27,7 @@ namespace Assets.Renato.Scripts
         public float cameraZoomDuration = 2f;
 
         public Management management;
+        private BoxCollider boxCollider;
         
         void Awake()
         {
@@ -37,6 +37,11 @@ namespace Assets.Renato.Scripts
             }
 
             collisionScript = GetComponentInChildren<Collision>();
+            Destroy(collisionScript);
+
+            // Turn on the xr stuff
+        
+            boxCollider = GetComponent<BoxCollider>();
         }
 
         void Start() 
@@ -52,7 +57,15 @@ namespace Assets.Renato.Scripts
         {
             if(collisionScript.playerSitDown) 
             {
+                // Store the world position of the xr rig
+                management.lastWorldPosition = cam.transform.position;
+
+                // Disable the collider
+                boxCollider.enabled = false;
+
                 StartCoroutine(Transition(1f, cameraZoomDuration, painting));
+
+                Destroy(collisionScript);
             }
         }
 
@@ -130,9 +143,6 @@ namespace Assets.Renato.Scripts
  
         private IEnumerator CameraZoomIn(float duration)
         {
-            // Store the world position of the xr rig
-            management.lastWorldPosition = xROrigin.transform.position; 
-
             Debug.Log("CameraZoomIn Coroutine Started...");
 
             Vector3 startPosition = cam.transform.position;
@@ -165,6 +175,9 @@ namespace Assets.Renato.Scripts
                     cam.transform.position = targetPosition; // Ensure it snaps to the exact position
 
                     yield return new WaitForSeconds(1f);
+                    
+                    xROrigin.enabled = true;
+                    trackedPoseDriver.enabled = true;
 
                     yield break;
                 }
@@ -190,7 +203,7 @@ namespace Assets.Renato.Scripts
 
             // Delete the chair
             // Destroy(gameObject);
-            yield return StartCoroutine(Fade("Car", 255f));
+            yield return StartCoroutine(Fade("CarScene", 255f));
 
             yield break;
             

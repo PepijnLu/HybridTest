@@ -7,6 +7,5 @@ public class Management : MonoBehaviour
     private void Awake() 
     {
         DontDestroyOnLoad(this);
-        
     }
 }
